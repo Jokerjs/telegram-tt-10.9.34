@@ -1,0 +1,38 @@
+.root {
+  display: flex;
+  padding: 0.5rem !important;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  margin-inline-start: 1.75rem !important;
+}
+
+.header {
+  display: flex;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+  line-height: 1.25rem;
+}
+
+.icon {
+  min-width: 2rem;
+  height: 2rem;
+  align-self: center;
+  border-radius: 0.625rem;
+  background: var(--item-color, #000);
+  margin-left: 1rem;
+}
+
+.font-icon {
+  font-size: 2rem !important;
+  align-self: center;
+  margin-right: 0 !important;
+  margin-left: 1rem;
+  color: var(--item-color, #000) !important;
+}

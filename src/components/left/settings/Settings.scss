@@ -1,0 +1,368 @@
+@use "../../../styles/mixins";
+
+#Settings {
+  height: 100%;
+
+  > .Transition_slide {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .left-header {
+    padding-right: 0.8125rem;
+  }
+
+  .self-profile .ProfileInfo {
+    margin: -0.5rem 0 0.75rem -0.5rem;
+  }
+}
+
+.settings-main-header {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-more-menu {
+  .bubble {
+    width: auto;
+
+    .MenuItem button {
+      padding-left: 1rem !important;
+      padding-right: 2rem !important;
+    }
+  }
+}
+
+.settings-content {
+  border-top: 1px solid var(--color-borders);
+  height: calc(100% - var(--header-height));
+
+  overflow-y: scroll;
+
+  &.no-border, &.two-fa, &.local-passcode, &.password-form {
+    border-top: none;
+  }
+
+  &.password-form .input-group.error label::first-letter {
+    text-transform: uppercase;
+  }
+
+  &.infinite-scroll {
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+
+    & > .custom-scroll {
+      flex: 1 1 auto;
+      height: auto;
+    }
+  }
+
+  .settings-icon-locked {
+    align-self: center;
+    margin-right: 0.25rem !important;
+    font-size: 1rem !important;
+  }
+
+  #monkey {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .AnimatedEmoji {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.settings-content-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1.5rem 1rem;
+  text-align: center;
+
+  @include mixins.side-panel-section;
+
+  &.no-border {
+    margin-bottom: 0;
+    box-shadow: none;
+  }
+
+  .input-group {
+    width: 100%;
+  }
+}
+
+.settings-content-icon {
+  margin-bottom: 2.5rem;
+
+  &.opacity-transition.not-shown {
+    display: block;
+    visibility: hidden;
+  }
+}
+
+.settings-main-menu {
+  padding: 0.5rem;
+
+  @include mixins.adapt-padding-to-scrollbar(0.5rem);
+  @include mixins.side-panel-section;
+
+  .ListItem.narrow:not(.multiline) {
+    margin-bottom: 0;
+
+    .ListItem-button {
+      min-height: 3.5rem;
+    }
+  }
+}
+
+.settings-item-simple,
+.settings-item {
+  text-align: initial;
+  padding: 1.5rem 0.5rem 1rem;
+
+  @include mixins.adapt-padding-to-scrollbar(0.5rem);
+  @include mixins.side-panel-section;
+}
+
+.settings-item {
+  &.no-border {
+    margin-bottom: 0;
+    box-shadow: none;
+    border-bottom: none;
+  }
+
+  &-header {
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    padding-inline-start: 1rem;
+    position: relative;
+  }
+
+  &-slider {
+    margin-top: 2rem;
+  }
+
+  &-description {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+    padding-inline-start: 1rem;
+
+    .settings-content.two-fa &,
+    .settings-content.password-form &,
+    .settings-content.local-passcode & {
+      font-size: 1rem;
+    }
+
+    .settings-edit-profile & {
+      margin-bottom: 0;
+      padding-bottom: 1.5rem;
+    }
+
+    &[dir="rtl"] {
+      text-align: right;
+      unicode-bidi: plaintext;
+    }
+  }
+
+  &-description-larger {
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    color: var(--color-text-secondary);
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    padding-inline-start: 1rem;
+
+    &.premium-info {
+      margin-top: 1rem;
+    }
+
+    &[dir="rtl"] {
+      text-align: right;
+    }
+  }
+
+  .ListItem {
+    &.narrow {
+      margin-bottom: 0;
+    }
+
+    .multiline-item {
+      .subtitle.tight {
+        line-height: 1rem;
+      }
+
+      .date {
+        float: right;
+        font-size: 0.75rem;
+        margin-left: 1rem;
+        color: var(--color-text-secondary);
+      }
+    }
+
+    &.destructive {
+      .ListItem-button {
+        color: var(--color-error);
+
+        .icon {
+          color: inherit;
+        }
+      }
+    }
+
+    &.blocked-list-item {
+      margin-bottom: 0.5rem;
+
+      .ListItem-button {
+        align-items: center;
+        text-align: left;
+        padding: 0.5rem;
+      }
+
+      .Avatar {
+        width: 3rem;
+        height: 3rem;
+        margin-right: 1rem;
+      }
+
+      .contact-info {
+        overflow: hidden;
+      }
+
+      .contact-name {
+        font-size: 1rem;
+        line-height: 1rem;
+        margin-bottom: 0.25rem;
+        font-weight: var(--font-weight-medium);
+      }
+
+      .contact-phone {
+        font-size: 0.875rem;
+        line-height: 1rem;
+        color: var(--color-text-secondary);
+      }
+    }
+
+    &[dir="rtl"] {
+      .multiline-item .date {
+        float: left;
+        margin-left: 0;
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  .RangeSlider {
+    margin-bottom: 1.0625rem;
+    padding-inline: 1rem;
+  }
+
+  .radio-group {
+    .Radio:last-child {
+      margin-bottom: 0;
+    }
+
+    .Checkbox {
+      margin-left: 0;
+    }
+  }
+
+  > .Checkbox, > .Radio {
+    padding-inline-start: 4.1875rem;
+  }
+
+  &__current-value {
+    margin-inline-start: auto;
+    padding-inline-start: 0.5rem;
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+  }
+}
+
+.settings-picker {
+  padding-block: 0;
+}
+
+.settings-input {
+  padding: 0.5rem 1rem 0 1rem;
+}
+
+.settings-fab-wrapper {
+  height: calc(100% - var(--header-height));
+  position: relative;
+  overflow: hidden;
+
+  .settings-content {
+    height: 100%;
+  }
+
+  .FloatingActionButton {
+    right: 1.5rem;
+
+    &[dir="rtl"] {
+      right: auto;
+      left: 1.5rem;
+    }
+  }
+}
+
+.settings-edit-profile {
+  padding: 0 1.5rem !important;
+}
+
+.settings-quick-reaction {
+  .Radio-main .label {
+    display: flex;
+    align-items: center;
+  }
+
+  .ReactionStaticEmoji {
+    margin-inline-end: 1rem;
+    width: 1.5rem;
+  }
+}
+
+.settings-dropdown-section {
+  .DropdownList {
+    position: relative;
+    padding: 0 0 0 3rem;
+
+    &--open {
+      transform: translate(0, 0);
+    }
+  }
+}
+
+.SettingsDefaultReaction {
+  .current-default-reaction {
+    margin-inline-end: 1.75rem;
+  }
+}
+
+.settings-item-chatlist {
+  padding: 0;
+}
+
+.settings-item-chatlist .ListItem {
+  margin: inherit;
+}
+
+.settings-item-picker {
+  padding: 1.5rem 0.5rem 0.5rem;
+}
+
+.block-user-button {
+  z-index: var(--z-chat-float-button);
+}
+
+.settings-button {
+  font-weight: var(--font-weight-semibold);
+}

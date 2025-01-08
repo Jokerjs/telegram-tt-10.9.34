@@ -1,0 +1,127 @@
+.VideoPlayerControls {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 2rem 0.5rem 0.5rem;
+  font-size: 0.875rem;
+  background: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0) 100%);
+  transition: opacity 0.3s;
+  z-index: var(--z-video-player-controls);
+
+  opacity: 0;
+  pointer-events: none;
+
+  &.mobile {
+    position: fixed;
+    padding: 2.25rem 0.5rem 0.75rem;
+    background: none;
+    .player-seekline {
+      top: 1rem;
+    }
+    .playback-rate-menu .bubble {
+      bottom: 4.6875rem;
+    }
+  }
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .spacer {
+    flex-grow: 1;
+  }
+
+  .Button.round {
+    width: 2rem;
+    padding: 0;
+    margin: 0.25rem;
+    height: 2rem;
+
+    @media (max-width: 320px) {
+      margin: 0.125rem;
+    }
+  }
+
+  .volume-slider {
+    margin-bottom: 0;
+    margin-left: -0.75rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    width: 0;
+
+    --volume-slider-width: 4rem;
+    --slider-color: #fff;
+    --color-borders: rgba(255, 255, 255, 0.5);
+    /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+    transition: width 0.2s ease-in-out;
+
+    &:hover {
+      overflow: hidden;
+      width: var(--volume-slider-width);
+      .RangeSlider__input {
+        opacity: 1;
+      }
+    }
+
+    .RangeSlider__input {
+      margin-bottom: 0;
+      opacity: 0;
+      transition: opacity 0.15s ease-in-out;
+    }
+  }
+
+  .volume:hover + .volume-slider {
+    overflow: hidden;
+    width: var(--volume-slider-width);
+    .RangeSlider__input {
+      opacity: 1;
+    }
+  }
+
+  .player-time {
+    color: rgba(255, 255, 255, 0.5);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .player-file-size {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 0.5rem;
+
+    @media (max-width: 320px) {
+      margin: 0.25rem;
+    }
+  }
+
+  .playback-rate-menu {
+    color: var(--color-text);
+    .bubble {
+      min-width: 3.5rem;
+      margin-right: 5.8125rem;
+      bottom: 4.1875rem;
+    }
+
+    &.no-fullscreen, &.no-pip {
+      .bubble {
+        margin-right: 3.3125rem;
+      }
+    }
+
+    &.no-fullscreen.no-pip {
+      .bubble {
+        margin-right: 0.8125rem;
+      }
+    }
+  }
+}

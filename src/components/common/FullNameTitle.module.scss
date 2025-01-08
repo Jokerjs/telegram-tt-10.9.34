@@ -1,0 +1,24 @@
+.root {
+  display: flex !important;
+  align-items: center;
+  gap: 0.25rem;
+
+  :global(.custom-emoji) {
+    color: var(--color-primary);
+  }
+}
+
+.fullName {
+  font-size: 1em;
+  margin-bottom: 0;
+
+  &.canCopy {
+    pointer-events: all;
+  }
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

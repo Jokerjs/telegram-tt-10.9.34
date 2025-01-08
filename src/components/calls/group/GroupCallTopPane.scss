@@ -1,0 +1,35 @@
+@use "../../../styles/mixins";
+
+.GroupCallTopPane {
+  @include mixins.header-pane;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: var(--custom-cursor, pointer);
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1rem;
+
+    .title {
+      font-size: 0.875rem;
+      color: var(--color-text);
+    }
+
+    .participants {
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+    }
+  }
+
+  .join {
+    height: 1.875rem;
+    border-radius: 1rem;
+    font-weight: var(--font-weight-medium);
+    padding: 0 1rem;
+    width: auto;
+  }
+}

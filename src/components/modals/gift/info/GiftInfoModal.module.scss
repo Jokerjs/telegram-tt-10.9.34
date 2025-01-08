@@ -1,0 +1,83 @@
+.modal :global(.modal-dialog) {
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.amount {
+  display: flex;
+  gap: 0.25rem;
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.325;
+}
+
+.title, .description, .amount {
+  margin-bottom: 0;
+}
+
+.soldOut {
+  color: var(--color-error);
+}
+
+.description {
+  text-align: center;
+  color: var(--_color-description, var(--color-text));
+}
+
+.footerDescription {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.unknown {
+  margin-inline-start: 0.25rem;
+}
+
+.giftValue {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.radialPattern {
+  position: absolute;
+  top: -3rem;
+  left: -1rem;
+  right: -1rem;
+  height: 16.5rem;
+
+  z-index: -1;
+}
+
+.uniqueAttribute {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.uniqueGift {
+  gap: 0;
+
+  .giftSticker {
+    margin-block: 1rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+    color: white;
+  }
+
+  .description {
+    font-size: 0.875rem;
+  }
+}

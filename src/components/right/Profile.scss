@@ -1,0 +1,162 @@
+@use '../../styles/mixins';
+
+.Profile {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  > .profile-info > .ChatInfo {
+    grid-area: chat_info;
+
+    .status.online {
+      color: var(--color-primary);
+    }
+  }
+
+  > .profile-info > .ChatExtra {
+    padding: 0.875rem 0.5rem 0.5rem;
+
+    @include mixins.adapt-padding-to-scrollbar(0.5rem);
+    @include mixins.side-panel-section;
+
+    .narrow {
+      margin-bottom: 0;
+    }
+
+    [dir="rtl"] {
+      .Switcher {
+        margin-left: 0;
+        margin-right: auto;
+      }
+    }
+  }
+
+  .FloatingActionButton {
+    z-index: 1;
+  }
+}
+
+.shared-media {
+  display: flex;
+  flex-direction: column-reverse;
+
+  .TabList {
+    background: var(--color-background);
+    top: -1px;
+    z-index: 1;
+  }
+
+  .Transition {
+    flex: 1;
+  }
+
+  .saved-dialogs {
+    height: 100% !important;
+  }
+
+  .content {
+    &.empty-list {
+      height: 100%;
+      padding-top: 5rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+
+      .Spinner {
+        --spinner-size: 2.75rem;
+      }
+    }
+
+    &.storiesArchive-list,
+    &.stories-list,
+    &.media-list,
+    &.previewMedia-list,
+    &.gifts-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 0.0625rem;
+    }
+
+    &.gifts-list {
+      gap: 0.625rem;
+    }
+
+    &.documents-list {
+      padding: 1.25rem;
+
+      & .File + .File {
+        margin-top: 1.25rem;
+      }
+    }
+
+    &.links-list {
+      padding: 1.25rem;
+
+      .ProgressSpinner,
+      .message-transfer-progress {
+        display: none;
+      }
+    }
+
+    &.audio-list,
+    &.voice-list {
+      padding: 1.25rem;
+
+      & .Audio {
+        .media-loading {
+          top: 0;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        & + .Audio {
+          margin-top: 1.6875rem;
+        }
+      }
+    }
+
+    &.similarChannels-list,
+    &.commonChats-list,
+    &.members-list,
+    &.gifts-list {
+      padding: 0.5rem;
+
+      @include mixins.adapt-padding-to-scrollbar(0.5rem);
+
+      @media (max-width: 600px) {
+        padding: 0.5rem 0;
+      }
+    }
+
+    &.similarChannels-list {
+      .ListItem.blured {
+        filter: opacity(0.8);
+      }
+
+      .show-more-channels {
+        width: calc(100% - 1rem);
+        margin: 0 auto;
+        margin-top: -1.8125rem;
+        z-index: 1;
+        border-radius: var(--border-radius-default-small);
+        box-shadow: -1rem 0 1rem 1rem var(--color-background), -1rem 0 1rem 0.3125rem var(--color-background);
+
+        .icon {
+          margin-left: 0.625rem;
+        }
+      }
+
+      .more-similar {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.8125rem;
+      }
+    }
+  }
+}
