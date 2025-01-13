@@ -661,24 +661,92 @@ function useEffectBase(
   if (!renderingInstance.hooks) {
     renderingInstance.hooks = {};
   }
-
   if (!renderingInstance.hooks.effects) {
     renderingInstance.hooks.effects = { cursor: 0, byCursor: [] };
   }
 
   const { cursor, byCursor } = renderingInstance.hooks.effects;
-  const effectConfig = byCursor[cursor];
   const componentInstance = renderingInstance;
 
+  const runEffectCleanup = () => safeExec(() => {
+    const { cleanup } = byCursor[cursor];
+    if (!cleanup) {
+      return;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    let DEBUG_startAt: number | undefined;
+    if (DEBUG) {
+      DEBUG_startAt = performance.now();
+    }
+
+    cleanup();
+
+    if (DEBUG) {
+      const duration = performance.now() - DEBUG_startAt!;
+      const componentName = DEBUG_resolveComponentName(componentInstance.Component);
+      if (duration > DEBUG_EFFECT_THRESHOLD) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[Teact] Slow cleanup at effect cursor #${cursor}: ${componentName}, ${Math.round(duration)} ms`,
+        );
+      }
+    }
+  }, () => {
+    // eslint-disable-next-line no-console
+    console.error(`[Teact] Error in effect cleanup at cursor #${cursor} in ${componentInstance.name}`);
+  }, () => {
+    byCursor[cursor].cleanup = undefined;
+  });
+
+  const runEffect = () => safeExec(() => {
+    if (componentInstance.mountState === MountState.Unmounted) {
+      return;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    let DEBUG_startAt: number | undefined;
+    if (DEBUG) {
+      DEBUG_startAt = performance.now();
+    }
+
+    const result = effect();
+    if (typeof result === 'function') {
+      byCursor[cursor].cleanup = result;
+    }
+
+    if (DEBUG) {
+      const duration = performance.now() - DEBUG_startAt!;
+      const componentName = DEBUG_resolveComponentName(componentInstance.Component);
+      if (duration > DEBUG_EFFECT_THRESHOLD) {
+        // eslint-disable-next-line no-console
+        console.warn(`[Teact] Slow effect at cursor #${cursor}: ${componentName}, ${Math.round(duration)} ms`);
+      }
+    }
+  }, () => {
+    // eslint-disable-next-line no-console
+    console.error(`[Teact] Error in effect at cursor #${cursor} in ${componentInstance.name}`);
+  });
+
   function schedule() {
-    scheduleEffect(componentInstance, cursor, effect, isLayout);
+    const effectId = `${componentInstance.id}_${cursor}`;
+
+    if (isLayout) {
+      pendingLayoutCleanups.set(effectId, runEffectCleanup);
+      pendingLayoutEffects.set(effectId, runEffect);
+    } else {
+      pendingCleanups.set(effectId, runEffectCleanup);
+      pendingEffects.set(effectId, runEffect);
+    }
+
+    runUpdatePassOnRaf();
   }
 
-  if (dependencies && effectConfig?.dependencies) {
-    if (dependencies.some((dependency, i) => dependency !== effectConfig.dependencies![i])) {
+  if (dependencies && byCursor[cursor]?.dependencies) {
+    if (dependencies.some((dependency, i) => dependency !== byCursor[cursor].dependencies![i])) {
       if (DEBUG && debugKey) {
         const causedBy = dependencies.reduce((res, newValue, i) => {
-          const prevValue = effectConfig.dependencies![i];
+          const prevValue = byCursor[cursor].dependencies![i];
           if (newValue !== prevValue) {
             res.push(`${i}: ${prevValue} => ${newValue}`);
           }
@@ -701,6 +769,14 @@ function useEffectBase(
     schedule();
   }
 
+  const isFirstRun = !byCursor[cursor];
+
+  byCursor[cursor] = {
+    ...byCursor[cursor],
+    dependencies,
+    schedule,
+  };
+
   function setupSignals() {
     const cleanups = dependencies?.filter(isSignal).map((signal, i) => signal.subscribe(() => {
       if (debugKey) {
@@ -708,7 +784,7 @@ function useEffectBase(
         console.log(`[Teact] Effect "${debugKey}" caused by signal #${i} new value:`, signal());
       }
 
-      byCursor[cursor].schedule!();
+      byCursor[cursor].schedule();
     }));
 
     if (!cleanups?.length) {
@@ -722,13 +798,7 @@ function useEffectBase(
     };
   }
 
-  byCursor[cursor] = {
-    ...effectConfig,
-    dependencies,
-    schedule,
-  };
-
-  if (!effectConfig) {
+  if (isFirstRun) {
     byCursor[cursor].releaseSignals = setupSignals();
   }
 

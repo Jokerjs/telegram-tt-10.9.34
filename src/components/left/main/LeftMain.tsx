@@ -219,16 +219,16 @@ const LeftMain: FC<OwnProps> = ({
           }
         }}
       </Transition>
-      {shouldRenderUpdateButton && (
-        <Button
-          fluid
-          badge
-          className={buildClassName('btn-update', updateButtonClassNames)}
-          onClick={handleUpdateClick}
-        >
-          {lang('lng_update_telegram')}
-        </Button>
-      )}
+      {/* {shouldRenderUpdateButton && ( */}
+      {/*   <Button */}
+      {/*     fluid */}
+      {/*     badge */}
+      {/*     className={buildClassName('btn-update', updateButtonClassNames)} */}
+      {/*     onClick={handleUpdateClick} */}
+      {/*   > */}
+      {/*     {lang('lng_update_telegram')} */}
+      {/*   </Button> */}
+      {/* )} */}
       {shouldRenderForumPanel && (
         <ForumPanel
           isOpen={isForumPanelOpen}

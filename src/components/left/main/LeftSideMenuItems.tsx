@@ -202,12 +202,12 @@ const LeftSideMenuItems = ({
       >
         {oldLang('TelegramFeatures')}
       </MenuItem>
-      <MenuItem
-        icon="bug"
-        onClick={handleBugReportClick}
-      >
-        {lang('MenuReportBug')}
-      </MenuItem>
+      {/* <MenuItem */}
+      {/*   icon="bug" */}
+      {/*   onClick={handleBugReportClick} */}
+      {/* > */}
+      {/*   {lang('MenuReportBug')} */}
+      {/* </MenuItem> */}
       {IS_BETA && (
         <MenuItem
           icon="permissions"
@@ -251,7 +251,8 @@ export default memo(withGlobal<OwnProps>(
       currentUserId,
       theme: selectTheme(global),
       animationLevel,
-      canInstall: Boolean(tabState.canInstall),
+      // canInstall: Boolean(tabState.canInstall),
+      canInstall: false,
       archiveSettings,
       attachBots,
     };

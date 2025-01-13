@@ -344,10 +344,9 @@ export function typify<
   };
 }
 
+(window as any).getGlobal = getUntypedGlobal;
+(window as any).setGlobal = setUntypedGlobal;
 if (DEBUG) {
-  (window as any).getGlobal = getUntypedGlobal;
-  (window as any).setGlobal = setUntypedGlobal;
-
   document.addEventListener('dblclick', () => {
     // eslint-disable-next-line no-console
     console.warn(

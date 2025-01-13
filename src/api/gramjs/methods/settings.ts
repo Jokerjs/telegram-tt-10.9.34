@@ -468,6 +468,18 @@ export async function fetchLangDifference({
   };
 }
 
+const zhHans: any = {
+  name: 'Chinese (Simplified)',
+  nativeName: '简体中文',
+  langCode: 'zh-hans-raw',
+  pluralCode: 'zh',
+  isRtl: false,
+  isBeta: true,
+  isOfficial: true,
+  stringsCount: 8841,
+  translatedCount: 8841,
+  translationsUrl: 'https://translations.telegram.org/zh-hans-beta/'
+};
 export async function fetchLanguages(): Promise<ApiLanguage[] | undefined> {
   const result = await invokeRequest(new GramJs.langpack.GetLanguages({
     langPack: OLD_DEFAULT_LANG_PACK,
@@ -476,7 +488,7 @@ export async function fetchLanguages(): Promise<ApiLanguage[] | undefined> {
     return undefined;
   }
 
-  return result.map(buildApiLanguage);
+  return [zhHans].concat(result.map(buildApiLanguage));
 }
 
 export async function fetchLanguage({

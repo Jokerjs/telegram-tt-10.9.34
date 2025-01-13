@@ -197,6 +197,7 @@ export type GlobalState = {
       active?: boolean;
       archived?: boolean;
       saved?: boolean;
+      isLoaded?: boolean;
     };
     lastMessageIds: {
       all?: Record<string, number>;
