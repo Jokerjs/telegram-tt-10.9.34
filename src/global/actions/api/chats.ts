@@ -2843,7 +2843,7 @@ async function loadChats(
         isFullyLoaded: {
           ...global.chats.isFullyLoaded,
           [listType]: true,
-          isLoaded: true,
+          isLoaded: listType === 'active',
         },
       },
     };
